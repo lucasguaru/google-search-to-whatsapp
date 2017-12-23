@@ -2,7 +2,7 @@
 <html lang="en" ng-app="demo">
 <head>
     <meta charset="utf-8">
-    <title>Pesquisar Links</title>
+    <title>Pesquisar Whatsapp - Cris Vet</title>
 
     <!--
       IE8 support, see AngularJS Internet Explorer Compatibility https://docs.angularjs.org/guide/ie
@@ -24,6 +24,8 @@
     <!-- ui-select files -->
     <script src="js/select.js"></script>
     <link rel="stylesheet" href="css/select.css">
+    
+    <script src="https://unpkg.com/contentful@3.8.1/browser-dist/contentful.min.js"></script>
 
     <script src="js/search_dados.js"></script>
     <script src="js/search.js"></script>
@@ -66,32 +68,20 @@
   
   <div class="container">
     <div>
-      <h3>Pesquisar Links:</h3>
-      <ui-select autofocus ng-model="ctrl.link.selected" ng-change="onSelectCallback()" theme="bootstrap" style="min-width: 300px;" title="Pesquisar por um link">
-        <ui-select-match placeholder="Pesquise por um link">{{$select.selected.nome}}</ui-select-match>
-        <ui-select-choices repeat="link in ctrl.links | propsFilter: {nome: $select.search, url: $select.search}">
-          <div ng-bind-html="link.nome | highlight: link.nome"></div>
+      <h2>Cris Vet</h2>
+    </div>
+    <div>
+      <h3>Pesquisar Whatsapp - Cris Vet</h3>
+      <ui-select autofocus ng-model="ctrl.contato.selected" ng-change="onSelectCallback()" theme="bootstrap" style="min-width: 300px;" title="Pesquisar por um contato">
+        <ui-select-match placeholder="Pesquise por um contato">{{$select.selected.nomeCompleto}}</ui-select-match>
+        <ui-select-choices repeat="contato in ctrl.contatos | propsFilter: {nome: $select.search, nomeDoAnimal: $select.search}">
+          <div ng-bind-html="contato.nomeCompleto | highlight : contato.nomeCompleto"></div>
           <small>
-            link: {{link.url}}
+            Telefone: {{contato.telefone}}
           </small>
         </ui-select-choices>
       </ui-select>
     </div>
   </div>
   </body>
-  <script>
-  
-    var mySearch = undefined;
-    
-    $(document).ready(function() {
-      $(document).keydown(function(event) {
-        if (event.keyCode == 32 && event.ctrlKey === true) {
-          if (!mySearch || mySearch.location.href === undefined) {
-            mySearch = window.open('search.html', '_blank');
-          }
-          var f = mySearch.focus();
-        }
-      });
-    });
-  </script>
   </html>
