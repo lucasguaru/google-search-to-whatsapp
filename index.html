@@ -72,7 +72,7 @@
     </div>
     <div>
       <h3>Pesquisar Whatsapp - Cris Vet</h3>
-      <ui-select autofocus ng-model="ctrl.contato.selected" ng-change="onSelectCallback()" theme="bootstrap" style="min-width: 300px;" title="Pesquisar por um contato">
+      <ui-select autofocus ng-model="ctrl.contato" ng-change="onSelectCallback()" theme="bootstrap" style="min-width: 300px;" title="Pesquisar por um contato">
         <ui-select-match placeholder="Pesquise por um contato">{{$select.selected.nomeCompleto}}</ui-select-match>
         <ui-select-choices repeat="contato in ctrl.contatos | propsFilter: {nome: $select.search, nomeDoAnimal: $select.search}">
           <div ng-bind-html="contato.nomeCompleto | highlight : contato.nomeCompleto"></div>
