@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="utf-8">
+    <title>Pesquisar Links</title>
+
+    <!--
+      IE8 support, see AngularJS Internet Explorer Compatibility https://docs.angularjs.org/guide/ie
+      For Firefox 3.6, you will also need to include jQuery and ECMAScript 5 shim
+    -->
+    <!--[if lt IE 9]>
+      <script src="js/ajax/1.11.0/jquery.js"></script>
+      <script src="js/ajax/es5-shim.js"></script>
+      <script>
+        document.createElement('ui-select');
+        document.createElement('ui-select-match');
+        document.createElement('ui-select-choices');
+      </script>
+    <![endif]-->
+
+    <script src="js/angularjs/1.5.0/angular.js"></script>
+    <script src="js/angularjs/1.5.0/angular-sanitize.js"></script>
+
+    <!-- ui-select files -->
+    <script src="js/select.js"></script>
+    <link rel="stylesheet" href="css/select.css">
+
+    <script src="js/search_dados.js"></script>
+    <script src="js/search.js"></script>
+
+    <!-- themes -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/select2.css">    
+    <link rel="stylesheet" href="css/selectize.default.css">
+    <!-- <link rel="stylesheet" href="css/selectize.bootstrap2.css"> -->
+    <!--<link rel="stylesheet" href="css/selectize.bootstrap3.css">--> 
+
+    <style>
+        body {
+            padding: 15px;
+        }
+
+        .select2 > .select2-choice.ui-select-match {
+            /* Because of the inclusion of Bootstrap */
+            height: 29px;
+        }
+
+        .selectize-control > .selectize-dropdown {
+            top: 36px;
+        }
+        /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+        .select-box {
+          background: #fff;
+          position: relative;
+          z-index: 1;
+        }
+        .alert-info.positioned {
+          margin-top: 1em;
+          position: relative;
+          z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+        }
+    </style>
+</head>
+
+<body class="ng-cloak" ng-controller="UrlCtrl as ctrl">
+  
+  <div class="container">
+    <div>
+      <h3>Pesquisar Links:</h3>
+      <ui-select autofocus ng-model="ctrl.link.selected" ng-change="onSelectCallback()" theme="bootstrap" style="min-width: 300px;" title="Pesquisar por um link">
+        <ui-select-match placeholder="Pesquise por um link">{{$select.selected.nome}}</ui-select-match>
+        <ui-select-choices repeat="link in ctrl.links | propsFilter: {nome: $select.search, url: $select.search}">
+          <div ng-bind-html="link.nome | highlight: link.nome"></div>
+          <small>
+            link: {{link.url}}
+          </small>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+  </body>
+  <script>
+  
+    var mySearch = undefined;
+    
+    $(document).ready(function() {
+      $(document).keydown(function(event) {
+        if (event.keyCode == 32 && event.ctrlKey === true) {
+          if (!mySearch || mySearch.location.href === undefined) {
+            mySearch = window.open('search.html', '_blank');
+          }
+          var f = mySearch.focus();
+        }
+      });
+    });
+  </script>
+  </html>
